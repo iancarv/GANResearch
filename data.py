@@ -62,7 +62,7 @@ def nuclei_position(cell):
         M = cv2.moments(c)
         cY = int(M["m10"] / M["m00"])
         cX = int(M["m01"] / M["m00"])
-        yield (cY-17,cX-17,cY-17,cy+17)
+        yield (cY-17,cX-17,cY-17,cX+17)
       
 
 def create_nuclei_data():
