@@ -29,7 +29,7 @@ def prepare_patches(patches):
 def is_nuclei(cell, t=17):      
     imgray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-    im2, contours = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     p_c = (17, 17)
     for cnt in contours:
       dist = abs(cv2.pointPolygonTest(cnt,p_c,True))
@@ -38,39 +38,39 @@ def is_nuclei(cell, t=17):
     return False
 
 def tp_fn(cell, windows, y_pred, y_scores, original):
-  tp = 0
-  fn = 0
-  boxes = windows
-  # grab the coordinates of the bounding boxes
-  x1 = boxes[:,0]
-  y1 = boxes[:,1]
-  x2 = boxes[:,2]
-  y2 = boxes[:,3]
-  cenX = (x1 + x2) / 2
-  cenY = (y1 + y2) / 2
-  viz = original.copy()
-  gray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
-  ret,gray = cv2.threshold(gray,127,255,cv2.THRESH_BINARY_INV)
-  im2, contours = cv2.findContours(gray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-#   cv2.drawContours(viz, contours, -1, (0,0,255), 5)
-  selected = []
-  not_found = []
-  dSquared = 17*17
-  for c in contours[1:]:
+    tp = 0
+    fn = 0
+    boxes = windows
+    # grab the coordinates of the bounding boxes
+    x1 = boxes[:,0]
+    y1 = boxes[:,1]
+    x2 = boxes[:,2]
+    y2 = boxes[:,3]
+    cenX = (x1 + x2) / 2
+    cenY = (y1 + y2) / 2
+    viz = original.copy()
+    gray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
+    ret,gray = cv2.threshold(gray,127,255,cv2.THRESH_BINARY_INV)
+    contours, hierarchy = cv2.findContours(gray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    #   cv2.drawContours(viz, contours, -1, (0,0,255), 5)
+    selected = []
+    not_found = []
+    dSquared = 17*17
+    for c in contours[1:]:
     M = cv2.moments(c)
 
     cY = int(M["m10"] / M["m00"])
     cX = int(M["m01"] / M["m00"])
 
-#     in_area = ((x1 <= cX) & (cX <= x2)) & ((y1 <= cY) & (cY <= y2))
+    #     in_area = ((x1 <= cX) & (cX <= x2)) & ((y1 <= cY) & (cY <= y2))
     dx = (cenX - cX)
     dy = (cenY - cY)
-    
+
     in_area =  ((dx * dx) + (dy * dy) < dSquared)
     idxs = np.argwhere(in_area).reshape(-1)
-#     [cv2.circle(viz,(window[0] + 17, window[1] + 17), 3, (0,255,0), -1) for window in windows[idxs]]
-#     [cv2.circle(viz,(window[1] + 17, window[0] + 17), 3, (255,255,0), -1) for window in windows[np.argwhere(in_area & (y_pred == 0)).ravel()]]
-#     print(y_pred[idxs].any())
+    #     [cv2.circle(viz,(window[0] + 17, window[1] + 17), 3, (0,255,0), -1) for window in windows[idxs]]
+    #     [cv2.circle(viz,(window[1] + 17, window[0] + 17), 3, (255,255,0), -1) for window in windows[np.argwhere(in_area & (y_pred == 0)).ravel()]]
+    #     print(y_pred[idxs].any())
     if y_pred[idxs].any():
       selected.append(idxs[np.argmax(y_scores[idxs])])
       tp += 1
@@ -85,9 +85,9 @@ def tp_fn(cell, windows, y_pred, y_scores, original):
         c = (0,0,0)
     cv2.circle(viz,(cY, cX), 3, c, -1)
       
-#     break
+    #     break
       
-  return tp, fn, np.array(selected), np.array(not_found), viz
+    return tp, fn, np.array(selected), np.array(not_found), viz
 
 def test_model_metrics(gan, path, thresh_nms=0.3):
     print(path)
