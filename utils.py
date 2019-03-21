@@ -122,7 +122,7 @@ def test_model_metrics(gan, path, thresh_nms=0.3):
         patches = [crop[w[0]:w[2], w[1]:w[3]] for w in windows]
         cell_patches = [cell[w[0]:w[2], w[1]:w[3]] for w in windows]
         try:
-            y_proba = sgan.predict_proba(prepare_patches(patches))
+            y_proba = gan.predict_proba(prepare_patches(patches))
             y_proba = y_proba[1]
             y_pred = np.argmax(y_proba, axis=1)
             y_scores = y_proba[:,1]
