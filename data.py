@@ -66,7 +66,7 @@ def nuclei_position(cell):
             cX = 17
         if cY < 17:
             cY = 17
-        yield (cY-17,cX-17,cY+17,cX+17)
+        yield (cY,cX)
       
 
 def create_nuclei_data():
@@ -81,13 +81,16 @@ def create_nuclei_data():
         if crop.shape[0] != 400 or crop.shape[1] != 400:
           print('Menas')
           continue
-        cv2.imwrite('data/nuclei/%s.png' % (key), (crop-cell))
         for w in nuclei_position(cell):
             print(w)
+            cY,cX = w
+            w = (cY-17,cX-17,cY+17,cX+17)
             c = crop[w[0]:w[2], w[1]:w[3]]
+            cv2.circle(crop,(cY, cX), 3, (0,255,0), -1)
             print(c.shape)
             cv2.imwrite('data/nuclei/%s_%d.png' % (key, cnt), c)
             cnt += 1
+        cv2.imwrite('data/nuclei/%s.png' % (key), crop)
 
 
 
