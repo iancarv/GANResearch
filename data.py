@@ -46,3 +46,38 @@ def load_tmi_data():
     print(np.max(X_train_resized))
     print(np.min(X_train_resized))
     return X_train_resized, y_train, X_test_resized, y_test
+
+
+def nuclei_position(cell):
+    gray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
+    ret,gray = cv2.threshold(gray,127,255,cv2.THRESH_BINARY_INV)
+    contours, hierarchy = cv2.findContours(gray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    
+    selected = []
+    not_found = []
+    dSquared = 17*17
+    for c in contours[1:]:
+        M = cv2.moments(c)
+        cY = int(M["m10"] / M["m00"])
+        cX = int(M["m01"] / M["m00"])
+        yield (cY-17,cX-17,cY-17,cy+17)
+      
+
+def create_nuclei_data():
+    pickle_in = open('data/out',"rb")
+    m = pickle.load(pickle_in)
+    all_images = np.array(list(m.keys())[:10])
+    for key in all_images:
+        d = m[key]
+        cnt = 0
+        crop = d['crop']
+        cell = d['cell']
+        if crop.shape[0] != 400 or crop.shape[1] != 400:
+          print('Menas')
+          continue
+        for w in nuclei_position:
+            cv2.imwrite('%s_%d.png' % (key, cnt), crop[w[0]:w[2], w[1]:w[3]])
+            cnt += 1
+
+    return X_test, y_test
+
