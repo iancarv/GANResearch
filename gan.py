@@ -416,7 +416,7 @@ if __name__ == '__main__':
       for j in range(0,div):
         decreased = True
         thresh = (i + (j/div))/10
-        aveP, avePred, all_tests, all_scores, all_preds, results = test_model_from_results('output/out', results, thresh, True)
+        aveP, avePred, all_tests, all_scores, all_preds, results = test_model_from_results('data/out', results, thresh, True)
 
         if aveP >= highest:
           highest = aveP
