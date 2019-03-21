@@ -336,6 +336,7 @@ class GAN(object):
                                    for r in np.split(generated_images, config.num_classes)
                                    ], axis=-1) * 127.5 + 127.5).astype(np.uint8)
             print(img.shape)
+            print(img[0].shape)
             Image.fromarray(img).save(
                 'output/plot_epoch_{0:03d}_generated.png'.format(epoch))
 
