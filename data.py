@@ -90,6 +90,7 @@ def create_nuclei_data():
             cv2.imwrite('data/nuclei/%s_%d.png' % (key, cnt), c)
             cnt += 1
             X_test.append(c)
+            print(c.shape)
         cv2.imwrite('data/nuclei/%s.png' % (key), crop)
 
 
