@@ -332,11 +332,10 @@ class GAN(object):
                 [noise, sampled_labels], verbose=0)
 
             # arrange them into a grid
-            img = (np.concatenate([r.reshape(-1, 28, config.channels)
+            img = (np.concatenate([r.reshape(self.config.channels, -1, self.config.img_cols)
                                    for r in np.split(generated_images, 10)
                                    ], axis=-1) * 127.5 + 127.5).astype(np.uint8)
             print(img.shape)
-            print(img[0].shape)
             Image.fromarray(img).save(
                 'output/plot_epoch_{0:03d}_generated.png'.format(epoch))
 
