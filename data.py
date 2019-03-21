@@ -92,7 +92,7 @@ def create_nuclei_data():
             X_test.append(c.copy())
         cv2.imwrite('data/nuclei/%s.png' % (key), crop)
 
-
+    print(X_test[0].shape)
     X_test = np.column_stack(X_test)
     print(X_test.shape)
     return X_test
