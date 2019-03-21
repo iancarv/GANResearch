@@ -10,7 +10,7 @@ from PIL import Image
 from six.moves import range
 
 import keras.backend as K
-from keras.datasets import mnist
+
 from keras.layers import Input, Dense, Reshape, Flatten, Embedding, Dropout, Multiply
 from keras.layers.advanced_activations import LeakyReLU
 from keras.layers.convolutional import UpSampling2D, Convolution2D
@@ -23,6 +23,7 @@ from tensorflow import set_random_seed
 import numpy as np
 from loss import modified_binary_crossentropy
 import random
+import data
 
 K.set_image_dim_ordering('th')
 
@@ -197,6 +198,8 @@ class GAN(object):
 
 
     def train(self, X_train, y_train, X_test, y_test):
+        nb_train, nb_test = X_train.shape[0], X_test.shape[0]
+
         nb_epochs = self.nb_epochs
         batch_size = self.batch_size
 
@@ -342,14 +345,8 @@ class GAN(object):
 
 
 if __name__ == '__main__':
-    (X_train, y_train), (X_test, y_test) = mnist.load_data()
-    X_train = (X_train.astype(np.float32) - 127.5) / 127.5
-    X_train = np.expand_dims(X_train, axis=1)
 
-    X_test = (X_test.astype(np.float32) - 127.5) / 127.5
-    X_test = np.expand_dims(X_test, axis=1)
-
-    nb_train, nb_test = X_train.shape[0], X_test.shape[0]
+    X_train, y_train, X_test, y_test = load_tmi_data()
     config = Config(nb_epochs=2)
     gan = GAN(config)
     train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
