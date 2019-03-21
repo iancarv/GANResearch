@@ -85,9 +85,16 @@ def create_nuclei_data():
         for w in nuclei_position(cell):
             cY,cX = w
             w = (cY-17,cX-17,cY+17,cX+17)
-            # cv2.circle(crop,(cY, cX), 3, (0,255,0), -1)
+
             c = crop[w[1]:w[3],w[0]:w[2]]
-            print(c.shape)
+            if c.shape != (34, 34, 3):
+                print("ERRO")
+                print(key)
+                print(cnt)
+                print(cY,cX)
+                print(w)
+                print(c.shape)
+                continue
             cv2.imwrite('data/nuclei/%s_%d.png' % (key, cnt), c)
             cnt += 1
             X_test.append(c.copy())
