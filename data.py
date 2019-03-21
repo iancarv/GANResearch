@@ -100,14 +100,16 @@ def create_nuclei_data():
             X_test.append(c.copy())
         cv2.imwrite('data/nuclei/%s.png' % (key), crop)
 
-    print(X_test[0].shape)
     X_test = np.array(X_test)
-    print(X_test.shape)
-    print(X_test[0].shape)
-    print(X_test[1].shape)
-    return X_test
+    y_test = np.ones(X_test.shape[0])
+    m = pickle.load({
+        "X_test": X_test,
+        "y_test": y_test
+    })
+    return X_test, y_test
 
 
 
 if __name__ == '__main__':
-    create_nuclei_data()
+    X_test, y_test = create_nuclei_data()
+    print(y_test[:10])
