@@ -26,7 +26,7 @@ def prepare_patches(patches):
     return X_test_resized
 
 
-def is_nuclei(cell, t=10):      
+def is_nuclei(cell, t=5):      
     imgray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
