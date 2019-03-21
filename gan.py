@@ -203,7 +203,7 @@ class GAN(object):
         nb_epochs = self.nb_epochs
         batch_size = self.batch_size
 
-        for epoch in range(nb_epochs):
+        for epoch in range(nb_epochs): 
             print('Epoch {} of {}'.format(epoch + 1, nb_epochs))
 
             nb_batches = int(X_train.shape[0] / batch_size)
@@ -234,10 +234,8 @@ class GAN(object):
                 # layer as a length one sequence
                 generated_images = self.generator.predict(
                     [noise, sampled_labels.reshape((-1, 1))], verbose=0)
-                print(image_batch.shape, generated_images.shape)
                 X = np.concatenate((image_batch, generated_images))
                 y = np.array([-1] * batch_size + [1] * batch_size)
-                print(label_batch.shape, sampled_labels.shape)
                 aux_y = np.concatenate((label_batch, sampled_labels), axis=0)
 
                 # see if the discriminator can figure itself out...
