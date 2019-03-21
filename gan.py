@@ -138,7 +138,7 @@ class GAN(object):
         cnn.add(LeakyReLU())
 
         # take a channel axis reduction
-        cnn.add(Convolution2D(1, 2, 2, border_mode='same',
+        cnn.add(Convolution2D(self.channels, 2, 2, border_mode='same',
                               activation='tanh', init='glorot_uniform'))
 
         # this is the z space commonly refered to in GAN papers
