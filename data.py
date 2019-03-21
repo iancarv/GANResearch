@@ -105,7 +105,7 @@ def create_nuclei_data():
     m = pickle.dump({
         "X_test": X_test,
         "y_test": y_test
-    }, open('data/nuclei', 'wb'))
+    }, open('data/nuclei_imgs', 'wb'))
     return X_test, y_test
 
 
