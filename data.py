@@ -20,7 +20,7 @@ def load_tmi_data():
     print(X_train.shape)
     y_train = list(dataset['train_y'][0])
     
-    X_test = np.transpose(dataset['test_x'], (3, 0, 1, 2))
+    X_test = np.transpose(dataset['test_x'], (3, 2, 1, 0))
     y_test = list(dataset['test_y'][0])
     
     # Change shape and range. 
