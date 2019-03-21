@@ -26,7 +26,7 @@ def prepare_patches(patches):
     return X_test_resized
 
 
-def is_nuclei(cell, t=10):      
+def is_nuclei(cell, t=1):      
     imgray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -106,8 +106,8 @@ def test_model_metrics(gan, path, thresh_nms=0.3):
 
     precision = []
     recall = []
-    print(list(m.keys()))
-    all_images = np.array(list(m.keys())[:10])
+    # all_images = np.array(list(m.keys())[:10])
+    all_images = ['259' '318' '475' '075' '262' '395' '216' '181' '452' '445']
     print(all_images)
     results = {}
     for key in all_images:
