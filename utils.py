@@ -1,6 +1,7 @@
 import pickle
 import cv2
 import numpy as np
+
 def sliding_windows(img_size, window_size, step):
     max_x, max_y = img_size
     w, h = window_size
@@ -9,6 +10,8 @@ def sliding_windows(img_size, window_size, step):
     for x_0 in range(x, max_x - w, step):
         for y_0 in range(y, max_y - h, step):
             windows.append((y_0,x_0,y_0+h,x_0+w))
+
+    return np.array(windows)
 
 
 def prepare_patches(patches):
