@@ -4,6 +4,7 @@ import numpy as np
 import pickle
 import cv2
 from skimage.transform import resize
+from utils import prepare_patches
 
 def load_mnist_data():
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
@@ -114,7 +115,12 @@ def create_nuclei_data():
     }, open('data/nuclei_imgs', 'wb'))
     return X_test, y_test
 
-# def load
+def load_nuclei_data():
+    pickle_in = open('data/nuclei_imgs',"rb")
+    m = pickle.load(pickle_in)
+    X_test = prepare_patches(m['X_test'])
+    y_test = m['y_test']
+    return  X_test, y_test
 
 
 

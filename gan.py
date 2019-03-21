@@ -383,7 +383,7 @@ class GAN(object):
 
 if __name__ == '__main__':
     # epoch = 0
-    # X_train, y_train, X_test, y_test = data.load_tmi_data()
+    X_train, y_train, X_test, y_test = data.load_tmi_data()
     config = Config(nb_epochs=15, channels=3, num_classes=2)
     gan = GAN(config)
     # train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
@@ -404,26 +404,7 @@ if __name__ == '__main__':
 
     gan.generator.load_weights('output/params_generator_epoch_014.hdf5')
     gan.discriminator.load_weights('output/params_discriminator_epoch_014.hdf5')
-    aveP, avePred, all_tests, all_scores, all_preds, results = test_model_metrics(gan, 'data/out')
-    outfile = open('output/metrics.pkl','wb')
-    pickle.dump({
-        'aveP': aveP, 
-        'avePred': avePred,
-        'all_tests': all_tests,
-        'all_scores': all_scores,
-        'all_preds': all_preds,
-        'results': results
-    },outfile)
-    outfile.close()
-    
-    highest = 0
-    hi_thresh = 0
-    decreased = True
-    path = 'output/metrics.pkl'
-    pickle_in = open(path,"rb")
-    full_result = pickle.load(pickle_in)
-    results = full_result.get('results', full_result)
-    aveP, avePred, all_tests, all_scores, all_preds, results = test_model_from_results('data/out', results, 0.3, True)
-        
-    print('Highest AveP', aveP)
-    print('Highest AveP', avePred)
+    X_train, y_train, X_test, y_test = data.load_tmi_data()
+    gan.predict(X_test, y_test)
+    X_test, y_test = load_nuclei_data()
+    gan.predict(X_test, y_test)
