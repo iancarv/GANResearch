@@ -26,7 +26,7 @@ def prepare_patches(patches):
     return X_test_resized
 
 
-def is_nuclei(cell, t=17):      
+def is_nuclei(cell, t=14):      
     imgray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -119,7 +119,7 @@ def test_model_metrics(gan, path, thresh_nms=0.3):
           print('Menas')
           continue
         results[key] = {}
-        windows = sliding_windows((400, 400), (34, 34), 17)
+        windows = sliding_windows((400, 400), (34, 34), 34)
         patches = [crop[w[0]:w[2], w[1]:w[3]] for w in windows]
         cell_patches = [cell[w[0]:w[2], w[1]:w[3]] for w in windows]
         try:
