@@ -348,13 +348,10 @@ class GAN(object):
 
         return self.train_history, self.test_history
 
-
-
-
 if __name__ == '__main__':
     epoch = 0
     X_train, y_train, X_test, y_test = data.load_tmi_data()
-    config = Config(nb_epochs=30, channels=3, num_classes=2)
+    config = Config(nb_epochs=1, channels=3, num_classes=2)
     gan = GAN(config)
     train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
     pickle.dump({'train': train_history, 'test': test_history},
