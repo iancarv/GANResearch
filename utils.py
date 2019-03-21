@@ -199,7 +199,6 @@ def test_model_from_results(path, results, thresh_nms=1, use_real=True):
       if crop.shape[0] != 400 or crop.shape[1] != 400:
         print('Menas')
         continue
-      start_time = time.time()
       y_scores = r['y_scores']
       y_test = r['y_test']
       y_proba = r['y_proba']
@@ -207,7 +206,6 @@ def test_model_from_results(path, results, thresh_nms=1, use_real=True):
       windows = r['windows']
       cell_patches = [cell[w[0]:w[2], w[1]:w[3]] for w in windows]
       
-      start_time = time.time()
       picks = nms(windows, y_scores, 0.8, thresh_nms)
         
       y_scores = y_scores[picks]
@@ -231,7 +229,6 @@ def test_model_from_results(path, results, thresh_nms=1, use_real=True):
           windows = np.append(windows, [[cX-17, cY-17, cX+17, cY+17]], axis=0)
           
     
-      start_time = time.time()
 
       if all_preds is None:
           all_preds = y_pred
