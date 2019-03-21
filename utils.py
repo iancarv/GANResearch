@@ -1,10 +1,10 @@
-    import pickle
-    import cv2
-    import numpy as np
-    from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, average_precision_score
-    from skimage.transform import resize
+import pickle
+import cv2
+import numpy as np
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, average_precision_score
+from skimage.transform import resize
 
-    def sliding_windows(img_size, window_size, step):
+def sliding_windows(img_size, window_size, step):
     max_x, max_y = img_size
     w, h = window_size
     x,y = 0,0
@@ -16,7 +16,7 @@
     return np.array(windows)
 
 
-    def prepare_patches(patches):
+def prepare_patches(patches):
     X_test = np.asarray(patches)
     X_test_resized = np.empty([X_test.shape[0], X_test.shape[3], 28, 28])
     for i in range(X_test.shape[0]):
@@ -26,7 +26,7 @@
     return X_test_resized
 
 
-    def is_nuclei(cell, t=17):      
+def is_nuclei(cell, t=17):      
     imgray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -37,7 +37,7 @@
         return True
     return False
 
-    def tp_fn(cell, windows, y_pred, y_scores, original):
+def tp_fn(cell, windows, y_pred, y_scores, original):
     tp = 0
     fn = 0
     boxes = windows
@@ -89,7 +89,7 @@
       
     return tp, fn, np.array(selected), np.array(not_found), viz
 
-    def test_model_metrics(gan, path, thresh_nms=0.3):
+def test_model_metrics(gan, path, thresh_nms=0.3):
     print(path)
     print("Testing models metrics for thresh_nms:", str(thresh_nms))
 
@@ -172,7 +172,7 @@
 
 
 
-    def test_model_from_results(path, results, thresh_nms=1, use_real=True):
+def test_model_from_results(path, results, thresh_nms=1, use_real=True):
     print("Testing models metrics from results thresh_nms:", str(thresh_nms))
 
     pickle_in = open(path,"rb")
