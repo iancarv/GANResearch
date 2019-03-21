@@ -207,7 +207,7 @@ def test_model_from_results(path, results, thresh_nms=1, use_real=True):
       windows = r['windows']
       cell_patches = [cell[w[0]:w[2], w[1]:w[3]] for w in windows]
       
-      picks = nms(windows, np.amax(y_proba, axis=1), 0.8, thresh_nms)
+      picks = nms(windows, np.amax(y_proba, axis=1), 0.1, thresh_nms)
         
       y_scores = y_scores[picks]
       y_pred = y_pred[picks]
