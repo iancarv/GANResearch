@@ -78,8 +78,7 @@ def nuclei_position(cell):
 def create_nuclei_data():
     pickle_in = open('data/out',"rb")
     m = pickle.load(pickle_in)
-    # all_images = np.array(list(m.keys())[:5])
-    all_images = ['426']
+    all_images = np.array(list(m.keys())[:])
     X_test = []
     for key in all_images:
         d = m[key]
@@ -115,8 +114,9 @@ def create_nuclei_data():
     }, open('data/nuclei_imgs', 'wb'))
     return X_test, y_test
 
+# def load
+
 
 
 if __name__ == '__main__':
     X_test, y_test = create_nuclei_data()
-    print(y_test[:10])
