@@ -246,7 +246,7 @@ class GAN(object):
                 # discriminator
                 #noise = np.random.uniform(-1, 1, (2 * batch_size, latent_size))
                 noise = np.random.normal(0, 1, (2 * self.batch_size, self.latent_size))
-                sampled_labels = np.random.randint(0, 10, 2 * self.batch_size)
+                sampled_labels = np.random.randint(0, config.num_classes, 2 * self.batch_size)
 
                 # we want to train the genrator to trick the discriminator
                 # For the generator, we want all the {fake, not-fake} labels to say
@@ -265,7 +265,7 @@ class GAN(object):
             noise = np.random.normal(0, 1, (nb_test, self.latent_size))
 
             # sample some labels from p_c and generate images from them
-            sampled_labels = np.random.randint(0, 10, nb_test)
+            sampled_labels = np.random.randint(0, config.num_classes, nb_test)
             generated_images = self.generator.predict(
                 [noise, sampled_labels.reshape((-1, 1))], verbose=False)
 
@@ -282,7 +282,7 @@ class GAN(object):
             # make new noise
             #noise = np.random.uniform(-1, 1, (2 * nb_test, latent_size))
             noise = np.random.normal(0, 1, (2 * nb_test, self.latent_size))
-            sampled_labels = np.random.randint(0, 10, 2 * nb_test)
+            sampled_labels = np.random.randint(0, config.num_classes, 2 * nb_test)
 
             trick = np.ones(2 * nb_test)
 
@@ -323,7 +323,7 @@ class GAN(object):
             noise = np.random.normal(-1, 1, (100, self.latent_size))
 
             sampled_labels = np.array([
-                [i] * 10 for i in range(10)
+                [i] * config.num_classes for i in range(config.num_classes)
             ]).reshape(-1, 1)
 
             # get a batch to display
@@ -332,7 +332,7 @@ class GAN(object):
 
             # arrange them into a grid
             img = (np.concatenate([r.reshape(-1, 28)
-                                   for r in np.split(generated_images, 10)
+                                   for r in np.split(generated_images, config.num_classes)
                                    ], axis=-1) * 127.5 + 127.5).astype(np.uint8)
 
             Image.fromarray(img).save(
