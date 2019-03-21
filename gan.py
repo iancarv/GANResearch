@@ -331,15 +331,11 @@ class GAN(object):
             # get a batch to display
             generated_images = self.generator.predict(
                 [noise, sampled_labels], verbose=0)
-            generated_images = np.transpose(img, (0,3,2,1))
 
-            generated_images = (X_train[:20] * 127.5 + 127.5).astype(np.uint8)
-            print(generated_images.shape)
+            generated_images = (generated_images * 127.5 + 127.5).astype(np.uint8)
             generated_images = np.transpose(generated_images, (0,3,2,1))
-            print(generated_images.shape)
 
             r = self.config.num_classes
-
             c = 10
             fig, axs = plt.subplots(r, c)
             cnt = 0
