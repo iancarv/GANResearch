@@ -1,6 +1,7 @@
 import scipy.io
 from keras.datasets import mnist
 import numpy as np
+from skimage.transform import resize
 
 def load_mnist_data():
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
