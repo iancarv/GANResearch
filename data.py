@@ -42,5 +42,7 @@ def load_tmi_data():
     
     X_train_resized = (2 * X_train_resized) - 1
     X_test_resized = (2 * X_test_resized) - 1
-
+    print(X_train_resized.shape)
+    print(np.max(X_train_resized))
+    print(np.min(X_train_resized))
     return X_train_resized, y_train, X_test_resized, y_test
