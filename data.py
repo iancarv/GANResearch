@@ -1,6 +1,7 @@
 import scipy.io
 # from keras.datasets import mnist
 import numpy as np
+import pickle
 from skimage.transform import resize
 
 def load_mnist_data():
