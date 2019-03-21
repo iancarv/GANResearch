@@ -143,39 +143,7 @@ def test_model_metrics(gan, path, thresh_nms=0.3):
           'windows': windows,
         }
                 
-        fp = np.argwhere((y_pred == 1) & (y_test == 0)).ravel()
-        tn = np.argwhere((y_pred == 0) & (y_test == 0)).ravel()
-        
-        tp, fn, arg_score, viz = tp_fn(cell, windows, y_pred, y_scores, crop)
-        arg_score = np.concatenate([arg_score, fp, tn])
-        y_scores = y_scores[arg_score]
-        y_test = y_test[arg_score]
-        y_pred = y_pred[arg_score]
-        windows = windows[arg_score]
-        y_proba = y_proba[arg_score]
 
-        fp = len(fp)
-        tps.append(tp)
-        fns.append(fn)
-        fps.append(fp)
-        tns.append(tns)
-        if tp == 0:
-          precision.append(0)
-          recall.append(0)
-        else:
-          prc = tp/(tp+fp)
-          rec = tp/(tp+fn)
-          precision.append(prc)
-          recall.append(rec)
-          
-        results[key]['processed'] = {
-          'y_scores': y_scores,
-          'y_test': y_test,
-          'y_proba': y_proba,
-          'y_pred': y_pred,
-          'picks': arg_score,
-          'windows': windows,
-        }
         if all_preds is None:
             all_preds = y_pred
             all_tests = y_test
@@ -191,27 +159,7 @@ def test_model_metrics(gan, path, thresh_nms=0.3):
     print ('\nOverall accuracy: %f%% \n' % (accuracy_score(all_tests, all_preds) * 100))
     print ('\nAveP: %f%% \n' % (aveP * 100))
     print ('\nAveP Preds: %f%% \n' % (avePred * 100))
-    tps = np.array(tps)
-    fns = np.array(fns)
-    fps = np.array(fps)
-    fps = np.array(fps)
-    precision = np.array(precision)
-    recall = np.array(recall)
-    f1 = 2 * (precision * recall) / (precision + recall)
-    idx = np.argsort(-precision)
-    precision = precision[idx]
-    idx = np.argsort(recall)
-    recall = recall[idx]
-    idx = np.argsort(f1)
-    f1 = f1[idx]
-    
-    f_precision = np.sum(tps)/np.sum(tps+fps)
-    f_recall = np.sum(tps)/np.sum(tps+fns)
-    f_f1 = 2 * (f_precision * f_recall) / (f_precision + f_recall)
-    print('Final Precision', f_precision)
-    print('Final Recall', f_recall)
-    print('Final F1', f_f1)
-    
+
     # Calculating and ploting a Classification Report
     class_names = ['Non-nunclei', 'Nuclei']
     print('Classification report:\n %s\n'
@@ -219,7 +167,5 @@ def test_model_metrics(gan, path, thresh_nms=0.3):
 
     cm = confusion_matrix(all_tests, all_preds)
     print('Confusion matrix:\n%s' % cm)
-
-
     
     return aveP, avePred, all_tests, all_scores, all_preds, results
