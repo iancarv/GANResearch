@@ -22,6 +22,7 @@ from keras.utils.generic_utils import Progbar
 from tensorflow import set_random_seed
 import numpy as np
 from loss import modified_binary_crossentropy
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, average_precision_score
 import random
 import data
 from matplotlib import pyplot as plt
@@ -197,6 +198,36 @@ class GAN(object):
 
         return Model(input=image, output=[fake, aux])
 
+    def predict(self, X_test, y_test, display=True):
+
+        # Generating a predictions from the discriminator over the testing dataset
+        y_pred = self.discriminator.predict(X_test)
+#         y_score = 
+        print(y_pred[1])
+        # Formating predictions to remove the one_hot_encoding format
+        y_scores = y_pred[1]
+        row_sums = y_scores.sum(axis=1)
+        y_score = y_score[:,1]
+        y_pred = np.argmax(y_scores, axis=1)
+        
+        if display:
+          print ('\nOverall accuracy: %f%% \n' % (accuracy_score(y_test, y_pred) * 100))
+          print ('\nAveP Score: %f%% \n' % (average_precision_score(y_test, y_score) * 100))
+          print ('\nAveP Preds: %f%% \n' % (average_precision_score(y_test, y_pred) * 100))
+          print('Max confidence', np.max(y_score))
+          print('Min confidence', np.min(y_score))
+          
+          # Calculating and ploting a Classification Report
+          class_names = ['Non-nunclei', 'Nuclei']
+          print('Classification report:\n %s\n'
+                % (classification_report(y_test, y_pred, target_names=class_names)))
+
+          # Calculating and ploting Confusion Matrix
+          cm = confusion_matrix(y_test, y_pred)
+         print('Confusion matrix:\n%s' % cm)
+        
+        return y_pred, y_scores
+
 
     def train(self, X_train, y_train, X_test, y_test):
         img_shape = (self.channels, self.img_rows, self.img_cols)
@@ -259,7 +290,7 @@ class GAN(object):
                     [noise, sampled_labels.reshape((-1, 1))], [trick, sampled_labels]))
 
             print('\nTesting for epoch {}:'.format(epoch + 1))
-
+            self.predict(X_test, y_test)
             # evaluate the testing loss here
 
             # generate a new batch of noise
