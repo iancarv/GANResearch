@@ -1,6 +1,7 @@
 import pickle
 import cv2
 import numpy as np
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, average_precision_score
 
 def sliding_windows(img_size, window_size, step):
     max_x, max_y = img_size
