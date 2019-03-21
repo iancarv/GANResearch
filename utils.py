@@ -107,7 +107,7 @@ def test_model_metrics(gan, path, thresh_nms=0.3):
     precision = []
     recall = []
     # all_images = np.array(list(m.keys())[:10])
-    all_images = ['259' '318' '475' '075' '262' '395' '216' '181' '452' '445']
+    all_images = ['259','318','475','075','262','395','216','181','452','445']
     print(all_images)
     results = {}
     for key in all_images:
