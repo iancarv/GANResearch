@@ -78,10 +78,11 @@ def create_nuclei_data():
           print('Menas')
           continue
         for w in nuclei_position(cell):
-            cv2.imwrite('%s_%d.png' % (key, cnt), crop[w[0]:w[2], w[1]:w[3]])
+            c = crop[w[0]:w[2], w[1]:w[3]]
+            print(c.shape)
+            cv2.imwrite('%s_%d.png' % (key, cnt), c)
             cnt += 1
 
-    return X_test, y_test
 
 
 if __name__ == '__main__':
