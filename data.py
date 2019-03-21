@@ -68,7 +68,7 @@ def nuclei_position(cell):
 def create_nuclei_data():
     pickle_in = open('data/out',"rb")
     m = pickle.load(pickle_in)
-    all_images = np.array(list(m.keys())[:10])
+    all_images = np.array(list(m.keys())[:1])
     for key in all_images:
         d = m[key]
         cnt = 0
@@ -78,6 +78,7 @@ def create_nuclei_data():
           print('Menas')
           continue
         for w in nuclei_position(cell):
+            print(w)
             c = crop[w[0]:w[2], w[1]:w[3]]
             print(c.shape)
             cv2.imwrite('%s_%d.png' % (key, cnt), c)
