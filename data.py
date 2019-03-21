@@ -95,6 +95,7 @@ def create_nuclei_data():
     print(X_test[0].shape)
     X_test = np.array(X_test)
     print(X_test.shape)
+    print(X_test[0].shape)
     return X_test
 
 
