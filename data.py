@@ -66,6 +66,12 @@ def nuclei_position(cell):
             cX = 17
         if cY < 17:
             cY = 17
+
+        if cX + 17 > 399:
+            cX = 399 - 17
+        if cY + 17 > 399:
+            cY = 399 - 17
+
         yield (cY,cX)
       
 
