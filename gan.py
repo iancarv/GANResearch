@@ -333,7 +333,7 @@ class GAN(object):
             print(generated_images.shape)
             print(len(np.split(generated_images, config.num_classes)))
             [print(r.shape)
-                                   for r in np.split(generated_images, config.num_classes)
+                                   for r in np.split(generated_images, 10)
                                    ]
             # arrange them into a grid
             img = (np.concatenate([r.reshape(-1, 28)
