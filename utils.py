@@ -57,34 +57,34 @@ def tp_fn(cell, windows, y_pred, y_scores, original):
     not_found = []
     dSquared = 17*17
     for c in contours[1:]:
-    M = cv2.moments(c)
+        M = cv2.moments(c)
 
-    cY = int(M["m10"] / M["m00"])
-    cX = int(M["m01"] / M["m00"])
+        cY = int(M["m10"] / M["m00"])
+        cX = int(M["m01"] / M["m00"])
 
-    #     in_area = ((x1 <= cX) & (cX <= x2)) & ((y1 <= cY) & (cY <= y2))
-    dx = (cenX - cX)
-    dy = (cenY - cY)
+        #     in_area = ((x1 <= cX) & (cX <= x2)) & ((y1 <= cY) & (cY <= y2))
+        dx = (cenX - cX)
+        dy = (cenY - cY)
 
-    in_area =  ((dx * dx) + (dy * dy) < dSquared)
-    idxs = np.argwhere(in_area).reshape(-1)
-    #     [cv2.circle(viz,(window[0] + 17, window[1] + 17), 3, (0,255,0), -1) for window in windows[idxs]]
-    #     [cv2.circle(viz,(window[1] + 17, window[0] + 17), 3, (255,255,0), -1) for window in windows[np.argwhere(in_area & (y_pred == 0)).ravel()]]
-    #     print(y_pred[idxs].any())
-    if y_pred[idxs].any():
-      selected.append(idxs[np.argmax(y_scores[idxs])])
-      tp += 1
-      c = (0,255,0)
-    else:
-      fn += 1
-      c = (255,0,0)
-      if len(idxs):
-        selected.append(idxs[np.argmax(y_scores[idxs])])
-      else:
-        not_found.append((cY, cX))
-        c = (0,0,0)
-    cv2.circle(viz,(cY, cX), 3, c, -1)
-      
+        in_area =  ((dx * dx) + (dy * dy) < dSquared)
+        idxs = np.argwhere(in_area).reshape(-1)
+        #     [cv2.circle(viz,(window[0] + 17, window[1] + 17), 3, (0,255,0), -1) for window in windows[idxs]]
+        #     [cv2.circle(viz,(window[1] + 17, window[0] + 17), 3, (255,255,0), -1) for window in windows[np.argwhere(in_area & (y_pred == 0)).ravel()]]
+        #     print(y_pred[idxs].any())
+        if y_pred[idxs].any():
+          selected.append(idxs[np.argmax(y_scores[idxs])])
+          tp += 1
+          c = (0,255,0)
+        else:
+          fn += 1
+          c = (255,0,0)
+          if len(idxs):
+            selected.append(idxs[np.argmax(y_scores[idxs])])
+          else:
+            not_found.append((cY, cX))
+            c = (0,0,0)
+        cv2.circle(viz,(cY, cX), 3, c, -1)
+          
     #     break
       
     return tp, fn, np.array(selected), np.array(not_found), viz
