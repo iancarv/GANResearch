@@ -413,5 +413,5 @@ if __name__ == '__main__':
     results = full_result.get('results', full_result)
     aveP, avePred, all_tests, all_scores, all_preds, results = test_model_from_results('data/out', results, 0.3, True)
         
-    print('Highest AveP', highest)
-    print('Thresh', hi_thresh)
+    print('Highest AveP', aveP)
+    print('Highest AveP', avePred)
