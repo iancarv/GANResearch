@@ -38,7 +38,7 @@ def load_tmi_data():
     for i in range(X_test.shape[0]):
         X_test_resized[i] = resize(X_test[i], (X_train.shape[3], 28, 28), mode='reflect')
     
-	X_train_resized = (2 * X_train_resized) - 1
-	X_test_resized = (2 * X_test_resized) - 1
-
+    X_train_resized = (2 * X_train_resized) - 1
+    X_test_resized = (2 * X_test_resized) - 1
+    
     return X_train_resized, y_train, X_test_resized, y_test
