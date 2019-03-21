@@ -1,6 +1,15 @@
 import pickle
 import cv2
 import numpy as np
+def sliding_windows(img_size, window_size, step):
+    max_x, max_y = img_size
+    w, h = window_size
+    x,y = 0,0
+    windows = []
+    for x_0 in range(x, max_x - w, step):
+        for y_0 in range(y, max_y - h, step):
+            windows.append((y_0,x_0,y_0+h,x_0+w))
+
 
 def prepare_patches(patches):
     X_test = np.asarray(patches)
@@ -104,7 +113,7 @@ def test_model_metrics(gan, path, thresh_nms=0.3):
           print('Menas')
           continue
         results[key] = {}
-        windows = sliding_windows((400, 400), (34, 34), 1)
+        windows = sliding_windows((400, 400), (34, 34), 6)
         patches = [crop[w[0]:w[2], w[1]:w[3]] for w in windows]
         cell_patches = [cell[w[0]:w[2], w[1]:w[3]] for w in windows]
         try:
