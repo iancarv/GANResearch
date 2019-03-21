@@ -198,6 +198,7 @@ class GAN(object):
 
 
     def train(self, X_train, y_train, X_test, y_test):
+        img_shape = (self.channels, self.img_rows, self.img_cols)
         nb_train, nb_test = X_train.shape[0], X_test.shape[0]
 
         nb_epochs = self.nb_epochs
@@ -329,9 +330,9 @@ class GAN(object):
             # get a batch to display
             generated_images = self.generator.predict(
                 [noise, sampled_labels], verbose=0)
-
+            print(generated_images.shape)
             # arrange them into a grid
-            img = (np.concatenate([r.reshape(-1, 28)
+            img = (np.concatenate([r.reshape(img_shape)
                                    for r in np.split(generated_images, config.num_classes)
                                    ], axis=-1) * 127.5 + 127.5).astype(np.uint8)
 
@@ -346,7 +347,7 @@ class GAN(object):
 if __name__ == '__main__':
 
     X_train, y_train, X_test, y_test = data.load_tmi_data()
-    config = Config(nb_epochs=50, channels=3, num_classes=2)
+    config = Config(nb_epochs=1, channels=3, num_classes=2)
     gan = GAN(config)
     train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
     pickle.dump({'train': train_history, 'test': test_history},
