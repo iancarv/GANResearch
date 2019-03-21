@@ -346,7 +346,7 @@ class GAN(object):
 
 if __name__ == '__main__':
 
-    X_train, y_train, X_test, y_test = load_tmi_data()
+    X_train, y_train, X_test, y_test = data.load_tmi_data()
     config = Config(nb_epochs=2)
     gan = GAN(config)
     train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
