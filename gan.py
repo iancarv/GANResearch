@@ -336,8 +336,8 @@ class GAN(object):
                                    for r in np.split(generated_images, config.num_classes)
                                    ]
             # arrange them into a grid
-            img = (np.concatenate([r
-                                   for r in np.split(generated_images, config.num_classes)
+            img = (np.concatenate([r.reshape(-1, 28)
+                                   for r in np.split(generated_images, 10)
                                    ], axis=-1) * 127.5 + 127.5).astype(np.uint8)
             print(img.shape)
             print(img[0].shape)
