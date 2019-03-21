@@ -188,7 +188,8 @@ def test_model_from_results(path, results, thresh_nms=1, use_real=True):
 
     precision = []
     recall = []
-    all_images = np.array(list(results.keys())[:30])
+    all_images = np.array(list(results.keys())[:])
+    print(all_images)
     for idx, key in enumerate(all_images):
       if idx%15 == 0:
         print(key, end =" ")
