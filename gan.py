@@ -391,16 +391,18 @@ if __name__ == '__main__':
     #             open('output/acgan-history.pkl', 'wb'))
 
     aveP, avePred, all_tests, all_scores, all_preds, results = test_model_metrics(gan, 'data/out')
-    # outfile = open('output/metrics.pkl','wb')
-    # pickle.dump({
-    #     'aveP': aveP, 
-    #     'avePred': avePred,
-    #     'all_tests': all_tests,
-    #     'all_scores': all_scores,
-    #     'all_preds': all_preds,
-    #     'results': results
-    # },outfile)
-    # outfile.close()
+    outfile = open('output/metrics.pkl','wb')
+    pickle.dump({
+        'aveP': aveP, 
+        'avePred': avePred,
+        'all_tests': all_tests,
+        'all_scores': all_scores,
+        'all_preds': all_preds,
+        'results': results
+    },outfile)
+    outfile.close()
+
+    test_model_from_results('data/out', results, thresh_nms=0.3)
 
     # gan.generator.load_weights('output/params_generator_epoch_014.hdf5')
     # gan.discriminator.load_weights('output/params_discriminator_epoch_014.hdf5')
