@@ -237,6 +237,7 @@ class GAN(object):
                 print(image_batch.shape, generated_images.shape)
                 X = np.concatenate((image_batch, generated_images))
                 y = np.array([-1] * batch_size + [1] * batch_size)
+                print(label_batch.shape, sampled_labels.shape)
                 aux_y = np.concatenate((label_batch, sampled_labels), axis=0)
 
                 # see if the discriminator can figure itself out...
