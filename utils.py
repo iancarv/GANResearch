@@ -75,11 +75,9 @@ def tp_fn(cell, windows, y_pred, y_scores, original):
       
   return tp, fn, np.array(selected), np.array(not_found), viz
 
-def test_model_metrics(path, thresh_nms=0.3):
+def test_model_metrics(gan, path, thresh_nms=0.3):
     print(path)
     print("Testing models metrics for thresh_nms:", str(thresh_nms))
-    sgan = SGAN()
-    sgan.load_weights()
 
     pickle_in = open(path,"rb")
     m = pickle.load(pickle_in)
