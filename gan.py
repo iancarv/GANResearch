@@ -384,8 +384,8 @@ class GAN(object):
 if __name__ == '__main__':
     # epoch = 0
     # X_train, y_train, X_test, y_test = data.load_tmi_data()
-    # config = Config(nb_epochs=15, channels=3, num_classes=2)
-    # gan = GAN(config)
+    config = Config(nb_epochs=15, channels=3, num_classes=2)
+    gan = GAN(config)
     # train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
     # pickle.dump({'train': train_history, 'test': test_history},
     #             open('output/acgan-history.pkl', 'wb'))
@@ -402,6 +402,8 @@ if __name__ == '__main__':
     # },outfile)
     # outfile.close()
 
+    gan.generator.load_weights('output/params_generator_epoch_014.hdf5')
+    gan.discriminator.load_weights('output/params_discriminator_epoch_014.hdf5')
     highest = 0
     hi_thresh = 0
     decreased = True
