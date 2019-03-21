@@ -209,7 +209,7 @@ class GAN(object):
             epoch_gen_loss = []
             epoch_disc_loss = []
 
-            for index in range(nb_batches):
+            for index in range(1):
                 if len(epoch_gen_loss) + len(epoch_disc_loss) > 1:
                     progress_bar.update(index, values=[('disc_loss',np.mean(np.array(epoch_disc_loss),axis=0)[0]), ('gen_loss', np.mean(np.array(epoch_gen_loss),axis=0)[0])])
                 else:
@@ -298,7 +298,7 @@ class GAN(object):
             self.test_history['discriminator'].append(discriminator_test_loss)
 
             print('{0:<22s} | {1:4s} | {2:15s} | {3:5s}'.format(
-                'component', *discriminator.metrics_names))
+                'component', *self.discriminator.metrics_names))
             print('-' * 65)
 
             ROW_FMT = '{0:<22s} | {1:<4.2f} | {2:<15.2f} | {3:<5.2f}'
@@ -311,10 +311,10 @@ class GAN(object):
             print(ROW_FMT.format('discriminator (test)',
                                  *self.test_history['discriminator'][-1]))
             # save weights every epoch
-            generator.save_weights(
-                'params_generator_epoch_{0:03d}.hdf5'.format(epoch), True)
-            discriminator.save_weights(
-                'params_discriminator_epoch_{0:03d}.hdf5'.format(epoch), True)
+            self.generator.save_weights(
+                'output/params_generator_epoch_{0:03d}.hdf5'.format(epoch), True)
+            self.discriminator.save_weights(
+                'output/params_discriminator_epoch_{0:03d}.hdf5'.format(epoch), True)
 
             # generate some digits to display
             #noise = np.random.uniform(-1, 1, (100, latent_size))
@@ -334,7 +334,7 @@ class GAN(object):
                                    ], axis=-1) * 127.5 + 127.5).astype(np.uint8)
 
             Image.fromarray(img).save(
-                'plot_epoch_{0:03d}_generated.png'.format(epoch))
+                'output/plot_epoch_{0:03d}_generated.png'.format(epoch))
 
         return self.train_history, self.test_history
 
@@ -354,4 +354,4 @@ if __name__ == '__main__':
     gan = GAN(config)
     train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
     pickle.dump({'train': train_history, 'test': test_history},
-                open('acgan-history.pkl', 'wb'))
+                open('output/acgan-history.pkl', 'wb'))
