@@ -332,9 +332,9 @@ class GAN(object):
                 [noise, sampled_labels], verbose=0)
 
             # arrange them into a grid
-            img = (np.concatenate([r.reshape(-1, 3, 28, 28)
+            img = (np.concatenate([np.transpose(r.reshape(-1, 3, 28, 28), (3, 2, 1, 0))
                                    for r in np.split(generated_images, 10)
-                                   ], axis=0) * 127.5 + 127.5).astype(np.uint8)
+                                   ], axis=-1) * 127.5 + 127.5).astype(np.uint8)
             print(img.shape)
             print(img[0].shape)
             Image.fromarray(img).save(
