@@ -32,13 +32,13 @@ def load_tmi_data():
     y_train -= 1
 
     # Resize to 32x32
-    X_train_resized = np.empty([X_train.shape[0], X_train.shape[3], 28, 28])
+    X_train_resized = np.empty([X_train.shape[0], X_train.shape[1], 28, 28])
     for i in range(X_train.shape[0]):
-        X_train_resized[i] = resize(X_train[i], (X_train.shape[3], 28, 28), mode='reflect')
+        X_train_resized[i] = resize(X_train[i], (X_train.shape[1], 28, 28), mode='reflect')
 
-    X_test_resized = np.empty([X_test.shape[0], X_test.shape[3], 28, 28])
+    X_test_resized = np.empty([X_test.shape[0], X_test.shape[1], 28, 28])
     for i in range(X_test.shape[0]):
-        X_test_resized[i] = resize(X_test[i], (X_train.shape[3], 28, 28), mode='reflect')
+        X_test_resized[i] = resize(X_test[i], (X_train.shape[1], 28, 28), mode='reflect')
     
     X_train_resized = (2 * X_train_resized) - 1
     X_test_resized = (2 * X_test_resized) - 1
