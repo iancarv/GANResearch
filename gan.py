@@ -320,10 +320,10 @@ class GAN(object):
 
             # generate some digits to display
             #noise = np.random.uniform(-1, 1, (100, latent_size))
-            noise = np.random.normal(-1, 1, (100, self.latent_size))
+            noise = np.random.normal(-1, 1, (10 * config.num_classes, self.latent_size))
 
             sampled_labels = np.array([
-                [i] * config.num_classes for i in range(config.num_classes)
+                [i] * 10 for i in range(config.num_classes)
             ]).reshape(-1, 1)
 
             # get a batch to display
