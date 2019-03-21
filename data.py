@@ -102,10 +102,10 @@ def create_nuclei_data():
 
     X_test = np.array(X_test)
     y_test = np.ones(X_test.shape[0])
-    m = pickle.load({
+    m = pickle.dump({
         "X_test": X_test,
         "y_test": y_test
-    })
+    }, open('data/nuclei', 'wb'))
     return X_test, y_test
 
 
