@@ -18,7 +18,7 @@ def sliding_windows(img_size, window_size, step):
 
 def prepare_patches(patches):
     X_test = np.asarray(patches)
-    X_test_resized = np.empty([X_test.shape[0], X_test.shape[3], 32, 32])
+    X_test_resized = np.empty([X_test.shape[0], X_test.shape[3], 28, 28])
     for i in range(X_test.shape[0]):
         X_test_resized[i] = resize(X_test[i], (X_test.shape[3], 28, 28), mode='reflect')
     
