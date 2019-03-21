@@ -384,10 +384,20 @@ class GAN(object):
 if __name__ == '__main__':
     epoch = 0
     X_train, y_train, X_test, y_test = data.load_tmi_data()
-    config = Config(nb_epochs=1, channels=3, num_classes=2)
+    config = Config(nb_epochs=15, channels=3, num_classes=2)
     gan = GAN(config)
     train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
     pickle.dump({'train': train_history, 'test': test_history},
                 open('output/acgan-history.pkl', 'wb'))
 
-    test_model_metrics(gan, 'data/out')
+    aveP, avePred, all_tests, all_scores, all_preds, results = test_model_metrics(gan, 'data/out')
+    outfile = open('output/metrics.pkl','wb')
+    pickle.dump({
+        'aveP': aveP, 
+        'avePred': avePred,
+        'all_tests': all_tests,
+        'all_scores': all_scores,
+        'all_preds': all_preds,
+        'results': results
+    },outfile)
+    outfile.close()
