@@ -213,7 +213,7 @@ class GAN(object):
             epoch_gen_loss = []
             epoch_disc_loss = []
 
-            for index in range(2):
+            for index in range(nb_batches):
                 if len(epoch_gen_loss) + len(epoch_disc_loss) > 1:
                     progress_bar.update(index, values=[('disc_loss',np.mean(np.array(epoch_disc_loss),axis=0)[0]), ('gen_loss', np.mean(np.array(epoch_gen_loss),axis=0)[0])])
                 else:
@@ -335,7 +335,7 @@ class GAN(object):
             img = (np.concatenate([r.reshape(self.config.channels, -1, self.config.img_cols)
                                    for r in np.split(generated_images, 10)
                                    ], axis=-1) * 127.5 + 127.5).astype(np.uint8)
-            img = np.transpose(img, (2, 1, 0))
+            img = np.transpose(img, (1, 2, 0))
             print(img.shape)
             Image.fromarray(img).save(
                 'output/plot_epoch_{0:03d}_generated.png'.format(epoch))
