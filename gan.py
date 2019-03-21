@@ -216,7 +216,7 @@ class GAN(object):
                     progress_bar.update(index)
                 # generate a new batch of noise
                 #noise = np.random.uniform(-1, 1, (batch_size, latent_size))
-                noise = np.random.normal(0, 1, (batch_size, latent_size))
+                noise = np.random.normal(0, 1, (self.batch_size, self.latent_size))
 
                 # get a batch of real images
                 image_batch = X_train[index * batch_size:(index + 1) * batch_size]
@@ -243,8 +243,8 @@ class GAN(object):
                 # the generator optimize over an identical number of images as the
                 # discriminator
                 #noise = np.random.uniform(-1, 1, (2 * batch_size, latent_size))
-                noise = np.random.normal(0, 1, (2 * batch_size, latent_size))
-                sampled_labels = np.random.randint(0, 10, 2 * batch_size)
+                noise = np.random.normal(0, 1, (2 * self.batch_size, self.latent_size))
+                sampled_labels = np.random.randint(0, 10, 2 * self.batch_size)
 
                 # we want to train the genrator to trick the discriminator
                 # For the generator, we want all the {fake, not-fake} labels to say
@@ -279,7 +279,7 @@ class GAN(object):
 
             # make new noise
             #noise = np.random.uniform(-1, 1, (2 * nb_test, latent_size))
-            noise = np.random.normal(0, 1, (2 * nb_test, latent_size))
+            noise = np.random.normal(0, 1, (2 * nb_test, self.latent_size))
             sampled_labels = np.random.randint(0, 10, 2 * nb_test)
 
             trick = np.ones(2 * nb_test)
@@ -318,7 +318,7 @@ class GAN(object):
 
             # generate some digits to display
             #noise = np.random.uniform(-1, 1, (100, latent_size))
-            noise = np.random.normal(-1, 1, (100, latent_size))
+            noise = np.random.normal(-1, 1, (100, self.latent_size))
 
             sampled_labels = np.array([
                 [i] * 10 for i in range(10)
