@@ -26,7 +26,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 import random
 import data
 from matplotlib import pyplot as plt
-from utils import test_model_metrics
+from utils import test_model_metrics, test_model_from_results
 
 K.set_image_dim_ordering('th')
 
