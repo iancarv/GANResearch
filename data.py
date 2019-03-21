@@ -1,5 +1,5 @@
 import scipy.io
-from keras.datasets import mnist
+# from keras.datasets import mnist
 import numpy as np
 from skimage.transform import resize
 

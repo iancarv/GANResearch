@@ -24,6 +24,7 @@ import numpy as np
 from loss import modified_binary_crossentropy
 import random
 import data
+from matplotlib import pyplot as plt
 
 K.set_image_dim_ordering('th')
 
@@ -330,15 +331,24 @@ class GAN(object):
             # get a batch to display
             generated_images = self.generator.predict(
                 [noise, sampled_labels], verbose=0)
+            generated_images = np.transpose(img, (0,3,2,1))
 
-            # arrange them into a grid
-            img = (np.concatenate([r.reshape(self.config.channels, -1, self.config.img_cols)
-                                   for r in np.split(generated_images, 10)
-                                   ], axis=-1) * 127.5 + 127.5).astype(np.uint8)
-            img = np.transpose(img, (1, 2, 0))
-            print(img.shape)
-            Image.fromarray(img).save(
-                'output/plot_epoch_{0:03d}_generated.png'.format(epoch))
+            generated_images = (X_train[:20] * 127.5 + 127.5).astype(np.uint8)
+            print(generated_images.shape)
+            generated_images = np.transpose(generated_images, (0,3,2,1))
+            print(generated_images.shape)
+
+            r = self.config.num_classes
+
+            c = 10
+            fig, axs = plt.subplots(r, c)
+            cnt = 0
+            for i in range(r):
+                for j in range(c):
+                    axs[i,j].imshow(generated_images[cnt, :,:])
+                    axs[i,j].axis('off')
+                    cnt += 1
+            fig.savefig('output/plot_epoch_{0:03d}_generated.png'.format(epoch))
 
         return self.train_history, self.test_history
 
@@ -346,7 +356,7 @@ class GAN(object):
 
 
 if __name__ == '__main__':
-
+    epoch = 0
     X_train, y_train, X_test, y_test = data.load_tmi_data()
     config = Config(nb_epochs=1, channels=3, num_classes=2)
     gan = GAN(config)
