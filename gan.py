@@ -291,11 +291,11 @@ class GAN(object):
             generator_train_loss = np.mean(np.array(epoch_gen_loss), axis=0)
 
             # generate an epoch report on performance
-            train_history['generator'].append(generator_train_loss)
-            train_history['discriminator'].append(discriminator_train_loss)
+            self.train_history['generator'].append(generator_train_loss)
+            self.train_history['discriminator'].append(discriminator_train_loss)
 
-            test_history['generator'].append(generator_test_loss)
-            test_history['discriminator'].append(discriminator_test_loss)
+            self.test_history['generator'].append(generator_test_loss)
+            self.test_history['discriminator'].append(discriminator_test_loss)
 
             print('{0:<22s} | {1:4s} | {2:15s} | {3:5s}'.format(
                 'component', *discriminator.metrics_names))
@@ -303,13 +303,13 @@ class GAN(object):
 
             ROW_FMT = '{0:<22s} | {1:<4.2f} | {2:<15.2f} | {3:<5.2f}'
             print(ROW_FMT.format('generator (train)',
-                                 *train_history['generator'][-1]))
+                                 *self.train_history['generator'][-1]))
             print(ROW_FMT.format('generator (test)',
-                                 *test_history['generator'][-1]))
+                                 *self.test_history['generator'][-1]))
             print(ROW_FMT.format('discriminator (train)',
-                                 *train_history['discriminator'][-1]))
+                                 *self.train_history['discriminator'][-1]))
             print(ROW_FMT.format('discriminator (test)',
-                                 *test_history['discriminator'][-1]))
+                                 *self.test_history['discriminator'][-1]))
             # save weights every epoch
             generator.save_weights(
                 'params_generator_epoch_{0:03d}.hdf5'.format(epoch), True)
@@ -336,7 +336,7 @@ class GAN(object):
             Image.fromarray(img).save(
                 'plot_epoch_{0:03d}_generated.png'.format(epoch))
 
-        return train_history, test_history
+        return self.train_history, self.test_history
 
 
 
