@@ -404,6 +404,18 @@ if __name__ == '__main__':
 
     gan.generator.load_weights('output/params_generator_epoch_014.hdf5')
     gan.discriminator.load_weights('output/params_discriminator_epoch_014.hdf5')
+    aveP, avePred, all_tests, all_scores, all_preds, results = test_model_metrics(gan, 'data/out')
+    outfile = open('output/metrics.pkl','wb')
+    pickle.dump({
+        'aveP': aveP, 
+        'avePred': avePred,
+        'all_tests': all_tests,
+        'all_scores': all_scores,
+        'all_preds': all_preds,
+        'results': results
+    },outfile)
+    outfile.close()
+    
     highest = 0
     hi_thresh = 0
     decreased = True
