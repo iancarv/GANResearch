@@ -94,7 +94,7 @@ def create_nuclei_data():
         cv2.imwrite('data/nuclei/%s.png' % (key), crop)
 
 
-    X_test = np.concatenate(X_test)
+    X_test = np.concatenate([X_test])
     print(X_test.shape)
     return X_test
 
