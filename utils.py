@@ -201,11 +201,11 @@ def test_model_metrics(path, thresh_nms=0.3):
     
     # Calculating and ploting a Classification Report
     class_names = ['Non-nunclei', 'Nuclei']
-	print('Classification report:\n %s\n'
-	  % (classification_report(all_tests, all_preds, target_names=class_names)))
+    print('Classification report:\n %s\n'
+        % (classification_report(all_tests, all_preds, target_names=class_names)))
 
-	cm = confusion_matrix(all_tests, all_preds)
-	print('Confusion matrix:\n%s' % cm)
+    cm = confusion_matrix(all_tests, all_preds)
+    print('Confusion matrix:\n%s' % cm)
 
 
     
