@@ -211,20 +211,20 @@ class GAN(object):
         y_pred = np.argmax(y_scores, axis=1)
         
         if display:
-          print ('\nOverall accuracy: %f%% \n' % (accuracy_score(y_test, y_pred) * 100))
-          print ('\nAveP Score: %f%% \n' % (average_precision_score(y_test, y_score) * 100))
-          print ('\nAveP Preds: %f%% \n' % (average_precision_score(y_test, y_pred) * 100))
-          print('Max confidence', np.max(y_score))
-          print('Min confidence', np.min(y_score))
-          
-          # Calculating and ploting a Classification Report
-          class_names = ['Non-nunclei', 'Nuclei']
-          print('Classification report:\n %s\n'
+            print ('\nOverall accuracy: %f%% \n' % (accuracy_score(y_test, y_pred) * 100))
+            print ('\nAveP Score: %f%% \n' % (average_precision_score(y_test, y_score) * 100))
+            print ('\nAveP Preds: %f%% \n' % (average_precision_score(y_test, y_pred) * 100))
+            print('Max confidence', np.max(y_score))
+            print('Min confidence', np.min(y_score))
+
+            # Calculating and ploting a Classification Report
+            class_names = ['Non-nunclei', 'Nuclei']
+            print('Classification report:\n %s\n'
                 % (classification_report(y_test, y_pred, target_names=class_names)))
 
-          # Calculating and ploting Confusion Matrix
-          cm = confusion_matrix(y_test, y_pred)
-         print('Confusion matrix:\n%s' % cm)
+            # Calculating and ploting Confusion Matrix
+            cm = confusion_matrix(y_test, y_pred)
+            print('Confusion matrix:\n%s' % cm)
         
         return y_pred, y_scores
 
