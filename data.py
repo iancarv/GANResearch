@@ -81,6 +81,7 @@ def create_nuclei_data():
         if crop.shape[0] != 400 or crop.shape[1] != 400:
           print('Menas')
           continue
+        cv2.imwrite('data/nuclei/%s.png' % (key), crop+cell)
         for w in nuclei_position(cell):
             print(w)
             c = crop[w[0]:w[2], w[1]:w[3]]
