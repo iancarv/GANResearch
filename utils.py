@@ -51,7 +51,7 @@ def tp_fn(cell, windows, y_pred, y_scores, original):
   viz = original.copy()
   gray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
   ret,gray = cv2.threshold(gray,127,255,cv2.THRESH_BINARY_INV)
-  im2, contours, hierarchy = cv2.findContours(gray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+  im2, contours = cv2.findContours(gray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 #   cv2.drawContours(viz, contours, -1, (0,0,255), 5)
   selected = []
   not_found = []
