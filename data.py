@@ -24,8 +24,8 @@ def load_tmi_data():
     y_test = list(dataset['test_y'][0])
     
     # Change shape and range. 
-    y_train = np.asarray(y_train).reshape(-1, 1)
-    y_test = np.asarray(y_test).reshape(-1, 1)
+    y_train = np.asarray(y_train).reshape(-1)
+    y_test = np.asarray(y_test).reshape(-1)
 
 #   1-> 0 : Non-nucleus. 2 -> 1: Nucleus
     y_test -= 1

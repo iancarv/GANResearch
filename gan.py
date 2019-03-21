@@ -226,7 +226,7 @@ class GAN(object):
                 label_batch = y_train[index * batch_size:(index + 1) * batch_size]
 
                 # sample some labels from p_c
-                sampled_labels = np.random.randint(0, 10, batch_size)
+                sampled_labels = np.random.randint(0, config.num_classes, batch_size)
 
                 # generate a batch of fake images, using the generated labels as a
                 # conditioner. We reshape the sampled labels to be
