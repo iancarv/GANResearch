@@ -406,5 +406,5 @@ if __name__ == '__main__':
     gan.discriminator.load_weights('output/params_discriminator_epoch_014.hdf5')
     X_train, y_train, X_test, y_test = data.load_tmi_data()
     gan.predict(X_test, y_test)
-    X_test, y_test = load_nuclei_data()
+    X_test, y_test = data.load_nuclei_data()
     gan.predict(X_test, y_test)
