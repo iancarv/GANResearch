@@ -331,7 +331,10 @@ class GAN(object):
             generated_images = self.generator.predict(
                 [noise, sampled_labels], verbose=0)
             print(generated_images.shape)
-            print(np.concatenate(np.split(generated_images, config.num_classes)).shape)
+            print(len(np.split(generated_images, config.num_classes)))
+            [print(r.shape)
+                                   for r in np.split(generated_images, config.num_classes)
+                                   ]
             # arrange them into a grid
             img = (np.concatenate([r
                                    for r in np.split(generated_images, config.num_classes)
