@@ -411,29 +411,7 @@ if __name__ == '__main__':
     pickle_in = open(path,"rb")
     full_result = pickle.load(pickle_in)
     results = full_result.get('results', full_result)
-    for i in range(1,8):
-      div = 2
-      for j in range(0,div):
-        decreased = True
-        thresh = (i + (j/div))/10
-        aveP, avePred, all_tests, all_scores, all_preds, results = test_model_from_results('data/out', results, thresh, True)
-
-        if aveP >= highest:
-          highest = aveP
-          hi_thresh = thresh
-          decreased = False
-
-        if avePred >= highest:
-          highest = avePred
-          hi_thresh = thresh
-          decreased = False
-        
-        if decreased:
-          break
-        
-      if decreased:
-        break
-        
+    aveP, avePred, all_tests, all_scores, all_preds, results = test_model_from_results('data/out', results, 0.3, True)
         
     print('Highest AveP', highest)
     print('Thresh', hi_thresh)
