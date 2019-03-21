@@ -389,4 +389,4 @@ if __name__ == '__main__':
     pickle.dump({'train': train_history, 'test': test_history},
                 open('output/acgan-history.pkl', 'wb'))
 
-    test_model_metrics(gan, 'output/out')
+    test_model_metrics(gan, 'data/out')
