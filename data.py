@@ -81,3 +81,6 @@ def create_nuclei_data():
 
     return X_test, y_test
 
+
+if __name__ == '__main__':
+    create_nuclei_data()
