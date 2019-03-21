@@ -209,7 +209,7 @@ class GAN(object):
             epoch_gen_loss = []
             epoch_disc_loss = []
 
-            for index in range(1):
+            for index in range(nb_batches):
                 if len(epoch_gen_loss) + len(epoch_disc_loss) > 1:
                     progress_bar.update(index, values=[('disc_loss',np.mean(np.array(epoch_disc_loss),axis=0)[0]), ('gen_loss', np.mean(np.array(epoch_gen_loss),axis=0)[0])])
                 else:
