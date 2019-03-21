@@ -207,7 +207,7 @@ class GAN(object):
         # Formating predictions to remove the one_hot_encoding format
         y_scores = y_pred[1]
         row_sums = y_scores.sum(axis=1)
-        y_score = y_score[:,1]
+        y_score = y_scores[:,1]
         y_pred = np.argmax(y_scores, axis=1)
         
         if display:
