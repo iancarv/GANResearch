@@ -26,6 +26,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 import random
 import data
 from matplotlib import pyplot as plt
+from utils import test_model_metrics
 
 K.set_image_dim_ordering('th')
 
@@ -376,14 +377,16 @@ class GAN(object):
                     axs[i,j].axis('off')
                     cnt += 1
             fig.savefig('output/plot_epoch_{0:03d}_generated.png'.format(epoch))
-
+            plt.close()
         return self.train_history, self.test_history
 
 if __name__ == '__main__':
     epoch = 0
     X_train, y_train, X_test, y_test = data.load_tmi_data()
-    config = Config(nb_epochs=30, channels=3, num_classes=2)
+    config = Config(nb_epochs=1, channels=3, num_classes=2)
     gan = GAN(config)
     train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
     pickle.dump({'train': train_history, 'test': test_history},
                 open('output/acgan-history.pkl', 'wb'))
+
+    test_model_metrics('output/out')
