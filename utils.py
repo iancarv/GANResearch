@@ -29,7 +29,7 @@ def prepare_patches(patches):
 def is_nuclei(cell, t=17):      
     imgray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-    im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    im2, contours = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     p_c = (17, 17)
     for cnt in contours:
       dist = abs(cv2.pointPolygonTest(cnt,p_c,True))
