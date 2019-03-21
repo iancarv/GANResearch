@@ -260,7 +260,7 @@ class GAN(object):
 
             # generate a new batch of noise
             #noise = np.random.uniform(-1, 1, (nb_test, latent_size))
-            noise = np.random.normal(0, 1, (nb_test, latent_size))
+            noise = np.random.normal(0, 1, (nb_test, self.latent_size))
 
             # sample some labels from p_c and generate images from them
             sampled_labels = np.random.randint(0, 10, nb_test)
