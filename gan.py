@@ -115,7 +115,8 @@ class GAN(object):
         self.train_history = defaultdict(list)
         self.test_history = defaultdict(list)
 
-
+    def predict_proba(self, X_test):
+        return self.discriminator.predict(X_test)
 
     def build_generator(self, latent_size):
         # we will map a pair of (z, L), where z is a latent vector and L is a
