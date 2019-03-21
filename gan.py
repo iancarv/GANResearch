@@ -382,22 +382,56 @@ class GAN(object):
         return self.train_history, self.test_history
 
 if __name__ == '__main__':
-    epoch = 0
-    X_train, y_train, X_test, y_test = data.load_tmi_data()
-    config = Config(nb_epochs=15, channels=3, num_classes=2)
-    gan = GAN(config)
-    train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
-    pickle.dump({'train': train_history, 'test': test_history},
-                open('output/acgan-history.pkl', 'wb'))
+    # epoch = 0
+    # X_train, y_train, X_test, y_test = data.load_tmi_data()
+    # config = Config(nb_epochs=15, channels=3, num_classes=2)
+    # gan = GAN(config)
+    # train_history, test_history = gan.train(X_train, y_train, X_test, y_test)
+    # pickle.dump({'train': train_history, 'test': test_history},
+    #             open('output/acgan-history.pkl', 'wb'))
 
-    aveP, avePred, all_tests, all_scores, all_preds, results = test_model_metrics(gan, 'data/out')
-    outfile = open('output/metrics.pkl','wb')
-    pickle.dump({
-        'aveP': aveP, 
-        'avePred': avePred,
-        'all_tests': all_tests,
-        'all_scores': all_scores,
-        'all_preds': all_preds,
-        'results': results
-    },outfile)
-    outfile.close()
+    # aveP, avePred, all_tests, all_scores, all_preds, results = test_model_metrics(gan, 'data/out')
+    # outfile = open('output/metrics.pkl','wb')
+    # pickle.dump({
+    #     'aveP': aveP, 
+    #     'avePred': avePred,
+    #     'all_tests': all_tests,
+    #     'all_scores': all_scores,
+    #     'all_preds': all_preds,
+    #     'results': results
+    # },outfile)
+    # outfile.close()
+
+    highest = 0
+    hi_thresh = 0
+    decreased = True
+    path = 'output/metrics.pkl'
+    pickle_in = open(path,"rb")
+    full_result = pickle.load(pickle_in)
+    results = full_result.get('results', full_result)
+    for i in range(1,8):
+      div = 2
+      for j in range(0,div):
+        decreased = True
+        thresh = (i + (j/div))/10
+        aveP, avePred, all_tests, all_scores, all_preds, results = test_model_from_results('output/out', results, thresh, True)
+
+        if aveP >= highest:
+          highest = aveP
+          hi_thresh = thresh
+          decreased = False
+
+        if avePred >= highest:
+          highest = avePred
+          hi_thresh = thresh
+          decreased = False
+        
+        if decreased:
+          break
+        
+      if decreased:
+        break
+        
+        
+    print('Highest AveP', highest)
+    print('Thresh', hi_thresh)
