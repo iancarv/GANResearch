@@ -119,7 +119,7 @@ def test_model_metrics(gan, path, thresh_nms=0.3):
           print('Menas')
           continue
         results[key] = {}
-        windows = sliding_windows((400, 400), (34, 34), 6)
+        windows = sliding_windows((400, 400), (34, 34), 34)
         patches = [crop[w[0]:w[2], w[1]:w[3]] for w in windows]
         cell_patches = [cell[w[0]:w[2], w[1]:w[3]] for w in windows]
         try:

@@ -390,7 +390,7 @@ if __name__ == '__main__':
     # pickle.dump({'train': train_history, 'test': test_history},
     #             open('output/acgan-history.pkl', 'wb'))
 
-    # aveP, avePred, all_tests, all_scores, all_preds, results = test_model_metrics(gan, 'data/out')
+    aveP, avePred, all_tests, all_scores, all_preds, results = test_model_metrics(gan, 'data/out')
     # outfile = open('output/metrics.pkl','wb')
     # pickle.dump({
     #     'aveP': aveP, 
@@ -402,9 +402,9 @@ if __name__ == '__main__':
     # },outfile)
     # outfile.close()
 
-    gan.generator.load_weights('output/params_generator_epoch_014.hdf5')
-    gan.discriminator.load_weights('output/params_discriminator_epoch_014.hdf5')
-    X_train, y_train, X_test, y_test = data.load_tmi_data()
-    gan.predict(X_test, y_test)
-    X_test, y_test = data.load_nuclei_data()
-    gan.predict(X_test, y_test)
+    # gan.generator.load_weights('output/params_generator_epoch_014.hdf5')
+    # gan.discriminator.load_weights('output/params_discriminator_epoch_014.hdf5')
+    # X_train, y_train, X_test, y_test = data.load_tmi_data()
+    # gan.predict(X_test, y_test)
+    # X_test, y_test = data.load_nuclei_data()
+    # gan.predict(X_test, y_test)
